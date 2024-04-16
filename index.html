@@ -81,6 +81,7 @@
     const label = document.getElementById('label');
     const endBtn = document.getElementById('endBtn');
     const sendBtn = document.getElementById('sendBtn');
+    const closeAllBtn = document.getElementById("closeAllBtn");
     label.style.display = 'none';
 
     form.addEventListener('submit', (e) => {
@@ -106,6 +107,20 @@
       messages.appendChild(item);
       window.scrollTo(0, document.body.scrollHeight);
     });
+
+    closeAllBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      socket.emit('close message');
+    });
+
+    socket.on('close message', () => {
+      label.style.display = 'block';
+      endBtn.style.display = 'none';
+      sendBtn.style.display = 'none';
+      input.style.display = 'none';
+      closeAllBtn.style.display = 'none';
+      socket.close();
+    })
 
 
   </script>
